@@ -1440,7 +1440,7 @@ class RegionExtractionDecoder(nn.Module):
 
             print('********************************************************************************************')
             print('neg before' + str(len(negative_relations)))
-            if (len(positive_relations) * 4) < len(negative_relations):
+            if (len(positive_relations) * 4) < len(negative_relations) and 3 < len(negative_relations):
                 n_size = (len(positive_relations) * 4)
                 negative_relations = set(random.sample(set(negative_relations), n_size))
             print('neg after' + str(len(negative_relations)))
