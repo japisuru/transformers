@@ -23,6 +23,8 @@ import torch.utils.checkpoint
 from torch import nn
 from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
+import random
+
 from ...activations import ACT2FN
 from ...file_utils import (
     add_start_docstrings,
@@ -1435,6 +1437,11 @@ class RegionExtractionDecoder(nn.Module):
                 all_possible_relations = set([(0, 1)])
             positive_relations = set(list(zip(relations[b]["head"], relations[b]["tail"])))
             negative_relations = all_possible_relations - positive_relations
+            if (len(positive_relations) * 2) < len(negative_relations):
+                n_size = (len(positive_relations) * 2)
+            else:
+                n_size = len(negative_relations)
+            negative_relations = set(random.sample(set(negative_relations), n_size))
             positive_relations = set([i for i in positive_relations if i in all_possible_relations])
             reordered_relations = list(positive_relations) + list(negative_relations)
             relation_per_doc = {"head": [], "tail": [], "label": []}
