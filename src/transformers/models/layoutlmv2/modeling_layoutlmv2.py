@@ -1438,28 +1438,20 @@ class RegionExtractionDecoder(nn.Module):
             positive_relations = set(list(zip(relations[b]["head"], relations[b]["tail"])))
             negative_relations = all_possible_relations - positive_relations
 
-            print('********************************************************************************************')
-            print('neg before' + str(len(negative_relations)))
-            negative_times = 4
+            negative_times = 5
             if (len(positive_relations) * negative_times) < len(negative_relations) and (negative_times - 1) < len(
                     negative_relations) and 0 < len(positive_relations):
                 n_size = (len(positive_relations) * negative_times)
                 negative_relations = set(random.sample(set(negative_relations), n_size))
-            print('neg after' + str(len(negative_relations)))
 
-            print('pos before' + str(len(positive_relations)))
             positive_relations = set([i for i in positive_relations if i in all_possible_relations])
-            print('pos after' + str(len(positive_relations)))
             reordered_relations = list(positive_relations) + list(negative_relations)
-            print('pos + neg after' + str(len(reordered_relations)))
             relation_per_doc = {"head": [], "tail": [], "label": []}
             relation_per_doc["head"] = [i[0] for i in reordered_relations]
             relation_per_doc["tail"] = [i[1] for i in reordered_relations]
             relation_per_doc["label"] = [1] * len(positive_relations) + [0] * (
                 len(reordered_relations) - len(positive_relations)
             )
-            print('relation_per_doc - head' + str(len(relation_per_doc["head"])))
-            print('---------------------------------------------------------------------------------------------')
             assert len(relation_per_doc["head"]) != 0
             new_relations.append(relation_per_doc)
         return new_relations, entities
