@@ -1437,8 +1437,8 @@ class RegionExtractionDecoder(nn.Module):
                 all_possible_relations = set([(0, 1)])
             positive_relations = set(list(zip(relations[b]["head"], relations[b]["tail"])))
             negative_relations = all_possible_relations - positive_relations
-            if (len(positive_relations) * 2) < len(negative_relations):
-                n_size = (len(positive_relations) * 2)
+            if (len(positive_relations) * 4) < len(negative_relations):
+                n_size = (len(positive_relations) * 4)
             else:
                 n_size = len(negative_relations)
             negative_relations = set(random.sample(set(negative_relations), n_size))
