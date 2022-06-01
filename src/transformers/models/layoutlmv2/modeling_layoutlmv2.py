@@ -1438,7 +1438,7 @@ class RegionExtractionDecoder(nn.Module):
             positive_relations = set(list(zip(relations[b]["head"], relations[b]["tail"])))
             negative_relations = all_possible_relations - positive_relations
 
-            negative_times = 5
+            negative_times = 10
             if (len(positive_relations) * negative_times) < len(negative_relations) and (negative_times - 1) < len(
                     negative_relations) and 0 < len(positive_relations):
                 n_size = (len(positive_relations) * negative_times)
