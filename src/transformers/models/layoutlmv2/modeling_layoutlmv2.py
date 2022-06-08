@@ -1430,7 +1430,7 @@ class RegionExtractionDecoder(nn.Module):
                     (i, j)
                     for i in range(len(entities[b]["label"]))
                     for j in range(len(entities[b]["label"]))
-                    if entities[b]["label"][i] == 1 and entities[b]["label"][j] == 2
+                    if entities[b]["label"][i] != 0 and entities[b]["label"][j] != 0
                 ]
             )
             if len(all_possible_relations) == 0:
