@@ -1459,6 +1459,8 @@ class RegionExtractionDecoder(nn.Module):
     def get_predicted_relations(self, logits, relations, entities):
         pred_relations = []
         for i, pred_label in enumerate(logits.argmax(-1)):
+            print("*******************************")
+            print(str(pred_label))
             if pred_label != 1:
                 continue
             rel = {}
